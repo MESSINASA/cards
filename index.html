@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小马宝莉抽卡运势</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="theme-switcher">
+        <button id="themeButton" class="theme-button">
+            <i class="fas fa-palette"></i>
+        </button>
+        <div class="theme-menu hidden">
+            <div class="theme-category">
+                <h3>温暖系</h3>
+                <div class="theme-option" data-theme="pink" style="background: linear-gradient(45deg, #ff1493, #ff69b4)">
+                    <span>粉色主题</span>
+                </div>
+                <div class="theme-option" data-theme="peach" style="background: linear-gradient(45deg, #ff9a9e, #fad0c4)">
+                    <span>蜜桃主题</span>
+                </div>
+                <div class="theme-option" data-theme="sunset" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d)">
+                    <span>日落主题</span>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3>清凉系</h3>
+                <div class="theme-option" data-theme="blue" style="background: linear-gradient(45deg, #2196f3, #90caf9)">
+                    <span>海洋主题</span>
+                </div>
+                <div class="theme-option" data-theme="mint" style="background: linear-gradient(45deg, #00b894, #81ecec)">
+                    <span>薄荷主题</span>
+                </div>
+                <div class="theme-option" data-theme="forest" style="background: linear-gradient(45deg, #2ecc71, #a8e6cf)">
+                    <span>森林主题</span>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3>梦幻系</h3>
+                <div class="theme-option" data-theme="purple" style="background: linear-gradient(45deg, #9c27b0, #e1bee7)">
+                    <span>紫晶主题</span>
+                </div>
+                <div class="theme-option" data-theme="starry" style="background: linear-gradient(45deg, #2c3e50, #3498db)">
+                    <span>星空主题</span>
+                </div>
+                <div class="theme-option" data-theme="unicorn" style="background: linear-gradient(45deg, #ff6b6b, #7bed9f, #70a1ff)">
+                    <span>独角兽主题</span>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3>特别系</h3>
+                <div class="theme-option" data-theme="rainbow" style="background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff)">
+                    <span>彩虹主题</span>
+                </div>
+                <div class="theme-option" data-theme="galaxy" style="background: linear-gradient(45deg, #000428, #004e92)">
+                    <span>银河主题</span>
+                </div>
+                <div class="theme-option" data-theme="candy" style="background: linear-gradient(45deg, #fd79a8, #fab1a0, #ffeaa7)">
+                    <span>糖果主题</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <h1>小马宝莉抽卡运势</h1>
+        <div class="fortune-section">
+            <button id="checkFortune" class="fortune-button">查看今日抽卡运势</button>
+            <div id="fortuneResult" class="fortune-result hidden">
+                <div class="fortune-card">
+                    <h2>今日运势</h2>
+                    <p id="fortuneText"></p>
+                    <p id="fortuneAdvice"></p>
+                    <div id="luckyPony"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="cards-container" id="cardsContainer">
+            <!-- 卡片将通过 JavaScript 动态添加 -->
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 小马宝莉抽卡运势</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

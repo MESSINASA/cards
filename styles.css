@@ -1,0 +1,614 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background: var(--background-gradient);
+    min-height: 100vh;
+}
+
+header {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 3rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.fortune-section {
+    padding: 2rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.fortune-button {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1.3rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.fortune-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+    background: var(--primary-gradient);
+}
+
+.fortune-button:active {
+    transform: translateY(1px);
+}
+
+.fortune-result {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.fortune-result.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fortune-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 90%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fortune-card h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+    display: inline-block;
+}
+
+.fortune-card h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-gradient);
+    border-radius: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#fortuneText {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+#fortuneAdvice {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+#luckyPony {
+    margin-top: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    padding: 1rem;
+    border: 2px dashed var(--secondary-color);
+    border-radius: 15px;
+    display: inline-block;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--primary-gradient);
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .fortune-button {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+    
+    #fortuneText {
+        font-size: 1.2rem;
+    }
+    
+    #fortuneAdvice {
+        font-size: 1rem;
+    }
+}
+
+/* 主题切换按钮样式 */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.theme-button {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-button i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.theme-button:hover {
+    transform: rotate(30deg);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.theme-menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 200px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.theme-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.theme-option {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.theme-option:hover {
+    transform: translateX(5px);
+}
+
+/* 主题颜色变量 */
+:root {
+    --primary-gradient: linear-gradient(to right, #ff69b4, #ff1493);
+    --background-gradient: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+    --primary-color: #ff1493;
+    --secondary-color: #ff69b4;
+}
+
+/* 紫色主题 */
+[data-theme="purple"] {
+    --primary-gradient: linear-gradient(to right, #9c27b0, #e1bee7);
+    --background-gradient: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    --primary-color: #9c27b0;
+    --secondary-color: #ba68c8;
+}
+
+/* 蓝色主题 */
+[data-theme="blue"] {
+    --primary-gradient: linear-gradient(to right, #2196f3, #90caf9);
+    --background-gradient: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+    --primary-color: #2196f3;
+    --secondary-color: #64b5f6;
+}
+
+/* 彩虹主题 */
+[data-theme="rainbow"] {
+    --primary-gradient: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff);
+    --background-gradient: linear-gradient(135deg, #fff5f5 0%, #fff0f5 50%, #f0f8ff 100%);
+    --primary-color: #ff1493;
+    --secondary-color: #ff4081;
+}
+
+/* 使用变量替换原有的颜色值 */
+body {
+    background: var(--background-gradient);
+}
+
+header {
+    background: var(--primary-gradient);
+}
+
+.fortune-button {
+    background: var(--primary-gradient);
+}
+
+.fortune-card h2 {
+    color: var(--primary-color);
+}
+
+.fortune-card h2::after {
+    background: var(--primary-gradient);
+}
+
+#luckyPony {
+    color: var(--primary-color);
+    border-color: var(--secondary-color);
+}
+
+footer {
+    background: var(--primary-gradient);
+}
+
+.theme-button i {
+    color: var(--primary-color);
+}
+
+/* 蜜桃主题 */
+[data-theme="peach"] {
+    --primary-gradient: linear-gradient(to right, #ff9a9e, #fad0c4);
+    --background-gradient: linear-gradient(135deg, #fff5f5, #ffd1d1);
+    --primary-color: #ff9a9e;
+    --secondary-color: #fad0c4;
+}
+
+/* 日落主题 */
+[data-theme="sunset"] {
+    --primary-gradient: linear-gradient(to right, #ff6b6b, #ffd93d);
+    --background-gradient: linear-gradient(135deg, #fff3e6, #ffe8cc);
+    --primary-color: #ff6b6b;
+    --secondary-color: #ffd93d;
+}
+
+/* 薄荷主题 */
+[data-theme="mint"] {
+    --primary-gradient: linear-gradient(to right, #00b894, #81ecec);
+    --background-gradient: linear-gradient(135deg, #e6fffa, #ccfff5);
+    --primary-color: #00b894;
+    --secondary-color: #81ecec;
+}
+
+/* 森林主题 */
+[data-theme="forest"] {
+    --primary-gradient: linear-gradient(to right, #2ecc71, #a8e6cf);
+    --background-gradient: linear-gradient(135deg, #f0fff4, #d7fbe8);
+    --primary-color: #2ecc71;
+    --secondary-color: #a8e6cf;
+}
+
+/* 星空主题 */
+[data-theme="starry"] {
+    --primary-gradient: linear-gradient(to right, #2c3e50, #3498db);
+    --background-gradient: linear-gradient(135deg, #f5f6fa, #dcdde1);
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+}
+
+/* 独角兽主题 */
+[data-theme="unicorn"] {
+    --primary-gradient: linear-gradient(to right, #ff6b6b, #7bed9f, #70a1ff);
+    --background-gradient: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    --primary-color: #ff6b6b;
+    --secondary-color: #70a1ff;
+}
+
+/* 银河主题 */
+[data-theme="galaxy"] {
+    --primary-gradient: linear-gradient(to right, #000428, #004e92);
+    --background-gradient: linear-gradient(135deg, #e3e3e3, #c7c7c7);
+    --primary-color: #000428;
+    --secondary-color: #004e92;
+}
+
+/* 糖果主题 */
+[data-theme="candy"] {
+    --primary-gradient: linear-gradient(to right, #fd79a8, #fab1a0, #ffeaa7);
+    --background-gradient: linear-gradient(135deg, #fff0f5, #ffe4e1);
+    --primary-color: #fd79a8;
+    --secondary-color: #fab1a0;
+}
+
+/* 添加主题分类样式 */
+.theme-category {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.theme-category:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.theme-category h3 {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+/* 调整主题菜单样式 */
+.theme-menu {
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.theme-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.theme-menu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.theme-menu::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.theme-menu::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 运势生成动画 */
+@keyframes generating {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes sparkle {
+    0% { filter: brightness(100%); }
+    50% { filter: brightness(150%); }
+    100% { filter: brightness(100%); }
+}
+
+.fortune-generating .fortune-card {
+    animation: generating 2s ease-in-out, float 3s ease-in-out infinite;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+}
+
+.fortune-generating .fortune-card * {
+    opacity: 0;
+}
+
+.sparkle {
+    animation: sparkle 1s ease-in-out;
+}
+
+/* 按钮禁用状态样式 */
+.fortune-button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+}
+
+/* 运势等级样式 */
+.fortune-level {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+/* 添加渐变背景动画 */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.fortune-card {
+    background-size: 200% 200%;
+    animation: gradientBG 15s ease infinite;
+}
+
+/* 添加闪光��果 */
+@keyframes shine {
+    0% { background-position: -100% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.fortune-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    background-size: 200% 100%;
+    animation: shine 3s infinite;
+    pointer-events: none;
+}
+
+/* 添加历史记录查看器样式 */
+.history-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.history-viewer.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.history-content {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.history-header {
+    padding: 1.5rem;
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-history {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    line-height: 1;
+}
+
+.history-list {
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: calc(80vh - 80px);
+}
+
+.history-item {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.history-time {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.history-result {
+    margin: 0.5rem 0;
+}
+
+.history-level {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.history-text {
+    margin-bottom: 0.5rem;
+}
+
+.history-advice {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.history-pony {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.history-theme {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.no-history {
+    text-align: center;
+    color: #666;
+    padding: 2rem;
+}
+
+/* 添加滚动条样式 */
+.history-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+} 
